@@ -7,8 +7,8 @@ export const drawSunset = function(sketch, pg, features) {
 
   if(features.geometry) {
     drawSun(sketch, pg)
+    drawLines(sketch, pg)
     drawOutline(sketch, pg)
-
   }
 
   drawBackground(sketch, pg)
@@ -21,10 +21,13 @@ const drawSun = function(sketch, pg) {
   const endColor = sketch.color(311, 92, 70, 0.97)
   const startColor = sketch.color(311, 45, 85, 0.97)
 
-  // const startColor = sketch.color('black')
-  // const endColor = sketch.color('white')
   const borderWidth = 15  // How wide should the border around the sun be?
-  drawGradient(sketch, pg, 0, 0, 200 - borderWidth, 200 - borderWidth, startColor, endColor)
+  drawGradient(sketch, pg, 30, -20, 300 - borderWidth, startColor, endColor)
+}
+
+const drawLines = function(sketch, pg) {
+  // Draw lines representing the horizon or reflections
+  
 }
 
 const drawOutline = function(sketch, pg) {
@@ -49,16 +52,16 @@ const drawOutline = function(sketch, pg) {
   pg.pop()
 }
 
-const drawGradient = function(sketch, pg, x, y, width, height, startColor, endColor) {
+const drawGradient = function(sketch, pg, x, y, radius, startColor, endColor) {
   pg.push()
 
-  for(let i = height; i > 0; i--){
-      let percentage = i / height   // How far along in the gradient are we?
+  for(let i = radius; i > 0; i--){
+      let percentage = i / radius   // How far along in the gradient are we?
       let color = sketch.lerpColor(startColor, endColor, percentage)
       pg.stroke(color)
-      pg.circle(0, 0, i);
+      pg.circle(x, y, i);
 
-      console.log(`radius: ${i}  percentage: ${i / height}  color: ${color.value}`)
+      console.log(`radius: ${i}  percentage: ${i / radius}  color: ${color.value}`)
   }
   pg.pop()
 
