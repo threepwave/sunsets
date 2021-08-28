@@ -42,6 +42,8 @@ new p5( (sketch) => {
 
     drawSunset(sketch, pg, window.features)
     drawBuffer(sketch, pg)
+
+    sketch.noLoop()
   }
 
   /* Setup Canvas */
@@ -51,7 +53,7 @@ new p5( (sketch) => {
 
     const pg = sketch.createGraphics (smallerDimension / aspectRatio, smallerDimension / aspectRatio);
     pg.smooth()
-    
+
     sketch.colorMode(sketch.HSB)
 
     pg.translate(sketch.width / 2, sketch.height / 2) // Center (0, 0) in middle of canvas

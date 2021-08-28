@@ -9,19 +9,49 @@ export const drawSunset = function(sketch, pg, features) {
 
   if(features.geometry) {
     drawOutline(sketch, pg)
+    drawSun(sketch, pg)
   }
   
   sketch.pop()
 }
 
+const drawSun = function(sketch, pg) {
+  // Draw the sunny backdrop
+  const endColor = sketch.color(311, 92, 70)
+  const startColor = sketch.color(311, 45, 85)
+
+  // const startColor = sketch.color('black')
+  // const endColor = sketch.color('white')
+  const borderWidth = 15  // How wide should the border around the sun be?
+  drawGradient(sketch, pg, 0, 0, 200 - borderWidth, 200 - borderWidth, startColor, endColor)
+}
+
 const drawOutline = function(sketch, pg) {
-  // Draw initial geometry
-  const color = sketch.color('black')
+  // Draw small outline border around the sunset
+  const fillColor = sketch.color('black')
   const strokeColor = sketch.color('white')
+
+  pg.push()
   pg.stroke(strokeColor)
   pg.strokeWeight(7)
-  pg.fill(color)
-  pg.circle(0, 0, 200, 200)
+  pg.fill(fillColor)
+  pg.circle(0, 0, 200)
+  pg.pop()
+}
+
+const drawGradient = function(sketch, pg, x, y, width, height, startColor, endColor) {
+  pg.push()
+
+  for(let i = height; i > 0; i--){
+      let percentage = i / height   // How far along in the gradient are we?
+      let color = sketch.lerpColor(startColor, endColor, percentage)
+      pg.stroke(color)
+      pg.circle(0, 0, i);
+
+      console.log(`radius: ${i}  percentage: ${i / height}  color: ${color.value}`)
+  }
+  pg.pop()
+
 }
 
 const drawBackground = function(sketch, pg) {
