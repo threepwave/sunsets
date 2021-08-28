@@ -1,0 +1,28 @@
+{
+  "name": "neon",
+  "version": "0.0.1",
+  "description": "Procedural neon signs",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/threepwave/neon.git"
+  },
+  "author": "Guybrush Threepwave",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
+    "markdown-it": "^12.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^7.3.1",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.0.5"
+  }
+}

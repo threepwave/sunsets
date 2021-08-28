@@ -1,0 +1,55 @@
+<!-- Test Cases tool - Feed data in from a json file and pass to invaders.js-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />  
+    <title>Sunsets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./js/data/test.js" type="module" id="test"></script>
+    <script type="text/javascript">
+      // DEBUG - on or off
+      const DEBUG = false  // Enable debug commands (E.g. show grid, console))
+      var tester = true
+      // Generates a random hash and token id each time you reload, in the following format
+      //let tokenData = {"hash":"0xd9134c11cd5ed9798ea0811364d63bd850c69c5d13383c9983ade39847e9ea86","tokenId":"99000000"};
+      
+      function genTokenData(projectNum)
+      {
+          let data = {};
+          let hash = "0x";
+          for (var i = 0; i < 64; i++)
+          {
+              hash += Math.floor(Math.random() * 16).toString(16);
+          }
+          data.hash = hash;
+          data.tokenId = projectNum * 1000000 + Math.floor(Math.random() * 1000);
+          return data;
+      }
+
+      var tokenData = []
+      var tmpArray = []
+      let hash, tokenId
+     
+        test.onload = function() {
+        // read from end of array backwards
+        for(let k = window.test.cases.length-1; k >= 0; k--){
+          tmpArray = genTokenData(99)
+          tokenData.push(tmpArray)
+          
+          import('./js/sunsets.js?' + k) // We have to add a unique parameter, otherwise the browser thinks its the same script and won't reload it.
+        }
+    }
+        
+    </script>
+    <script src="./js/p5.js"></script>
+
+  </head>
+  <body>
+<H1>Hit refresh to generate a new sprite!</H1>
+  </body>
+  
+    </div>
+  </div>
+</html>

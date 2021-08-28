@@ -1,0 +1,23 @@
+canvas {
+  vertical-align: bottom;
+}
+
+.colortextbox {
+  width: 4.8em;
+  margin-left: 1em;
+  margin-right: 0.2em;
+}
+
+.leftcol {
+  display: inline-block;
+}
+
+.metadata {
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 2em;
+}
+
+.label {
+  font-weight: bold;
+}

@@ -1,0 +1,116 @@
+<!-- Palette tool - Try multiple palettes and see how they look -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />  
+    <title>Sunsets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <script type="text/javascript">
+      // DEBUG - on or off
+      const DEBUG = false  // Enable debug commands (E.g. show grid, console))
+    
+      // Generates a random hash and token id each time you reload, in the following format
+      //let tokenData = {"hash":"0xd9134c11cd5ed9798ea0811364d63bd850c69c5d13383c9983ade39847e9ea86","tokenId":"99000000"};
+      
+      function genTokenData(projectNum)
+      {
+          let data = {};
+          let hash = "0x";
+          for (var i = 0; i < 64; i++)
+          {
+              hash += Math.floor(Math.random() * 16).toString(16);
+          }
+          data.hash = hash;
+          data.tokenId = projectNum * 1000000 + Math.floor(Math.random() * 1000);
+          return data;
+      }
+
+      var tokenData = []
+      let hash, tokenId
+      let script
+      let initialData // Contains initial data loaded in from URL (to restore state)
+
+      /* Generate random seed */
+      let tmpData = genTokenData(99)
+      hash = tmpData.hash
+      tokenId = tmpData.tokenId
+      tokenData.push(tmpData)
+
+      /* New Geometry Button */
+      // Initialize handlers for buttons
+      window.onload = function() {
+        let random = Math.floor(Math.random() * 100) / 100 // Random number to make sure we get a unique script every time
+        import('./js/sunsets.js?' + random) // We have to add a unique parameter, otherwise the browser thinks its the same script and won't reload it.
+          .then(() => {
+            // Check if script has set features, if so create UI for them
+            if(window.features) {
+              const container = document.getElementById('features') // Grab features table
+
+              // Loop through features that came back from seed and create html objects for them
+              for(const feature in window.features) {
+                console.log(`${feature} ${window.features[feature]}`)
+                const row = document.createElement('tr')
+                container.appendChild(row)
+
+                const labelCell = document.createElement('td')
+                row.appendChild(labelCell)
+
+                const label = document.createElement('label')
+                label.innerText = feature
+                labelCell.appendChild(label)
+
+                const featureCell = document.createElement('td')
+                row.appendChild(featureCell)
+
+                switch(typeof(window.features[feature])) {
+                  case 'boolean': 
+                  // create radio button
+                  const checkbox = document.createElement('input')
+                  checkbox.type = 'checkbox'
+                  checkbox.id = `${feature}`
+
+                  if(window.features[feature] == true) {
+                    checkbox.checked = true
+                  } else {
+                    checkbox.checked = false
+                  }
+
+                  featureCell.appendChild(checkbox)
+
+                  checkbox.addEventListener('change', toggleCheckbox, null)
+
+                  break;
+                  default: break;
+                }
+              }
+            }
+        })
+      }
+
+      function toggleCheckbox(e) {
+        let feature = e.srcElement.id
+        window.features[feature] = !window.features[feature]
+      }
+
+    </script>
+    <script src="./js/lib/p5.js"></script>
+
+  </head>
+  <body>
+<H1>Hit refresh to generate a new sprite!</H1>
+  </body>
+  <container class="leftcol">
+    <div id="render">
+      <!-- render here -->
+    </div>
+  </container>
+  <div class="metadata">
+    <table>
+      <tbody id="features">
+        <th colspan="2">Features</th>
+      </tbody>
+    </table>
+  </div>
+</html>

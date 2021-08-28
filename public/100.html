@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />  
+    <title>Sunsets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./js/p5.js"></script>
+    <script>
+      // Generates a random hash and token id each time you reload, in the following format
+      //let tokenData = {"hash":"0xd9134c11cd5ed9798ea0811364d63bd850c69c5d13383c9983ade39847e9ea86","tokenId":"99000000"};
+      
+      function genTokenData(projectNum)
+      {
+          let data = {};
+          let hash = "0x";
+          for (var i = 0; i < 64; i++)
+          {
+              hash += Math.floor(Math.random() * 16).toString(16);
+          }
+          data.hash = hash;
+          data.tokenId = projectNum * 1000000 + Math.floor(Math.random() * 1000);
+          return data;
+      }
+
+      let tokenData = []
+
+      // Inject a bunch of instances
+      const iterations = 100
+      for(let j=0; j < iterations; j++) {
+        tokenData.push(genTokenData(99));
+
+        import('./js/sunsets.js?' + j) // We have to add a unique parameter, otherwise the browser thinks its the same script and won't reload it.
+      }
+    </script>   
+  </head>
+  <body>
+<H1>Hit refresh to generate a new set of 100 mints!</H1>
+<em>Note: mobile phones tend to run out of memory so try your desktop 🤙 </em>
+<div id="art"></div>
+  </body>
+  
+</html>
