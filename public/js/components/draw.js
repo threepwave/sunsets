@@ -17,8 +17,8 @@ export const drawSunset = function(sketch, pg, features) {
 
 const drawSun = function(sketch, pg) {
   // Draw the sunny backdrop
-  const endColor = sketch.color(311, 92, 70)
-  const startColor = sketch.color(311, 45, 85)
+  const endColor = sketch.color(311, 92, 70, 0.97)
+  const startColor = sketch.color(311, 45, 85, 0.97)
 
   // const startColor = sketch.color('black')
   // const endColor = sketch.color('white')
