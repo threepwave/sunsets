@@ -56,8 +56,11 @@ const drawGradient = function(sketch, pg, x, y, width, height, startColor, endCo
 
 const drawBackground = function(sketch, pg) {
   // Render background to canvas
-  const bgColor = sketch.color(46, 21, 95)
-  pg.background(bgColor)
+  const bgColors = [
+    sketch.color(46, 21, 95), // Beige
+    sketch.color(153, 21, 95) // Seafoam Green
+  ]
+  pg.background(bgColors[1])
 }
 
 export const drawBuffer = function(sketch, pg) {
