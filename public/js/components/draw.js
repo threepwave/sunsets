@@ -7,6 +7,7 @@ export const drawSunset = function(sketch, pg, features) {
 
   if(features.geometry) {
     drawSun(sketch, pg)
+    drawOcean(sketch, pg)
     drawLines(sketch, pg)
     drawOutline(sketch, pg)
   }
@@ -22,12 +23,29 @@ const drawSun = function(sketch, pg) {
   const startColor = sketch.color(311, 45, 85, 0.97)
 
   const borderWidth = 15  // How wide should the border around the sun be?
-  drawGradient(sketch, pg, 30, -20, 300 - borderWidth, startColor, endColor)
+  drawRadialGradient(sketch, pg, 30, -20, 300 - borderWidth, startColor, endColor)
 }
+
+const drawOcean = function(sketch, pg) {
+  // Draw the sunny backdrop
+  const endColor = sketch.color(181, 92, 70)
+  const startColor = sketch.color(163, 92, 70)
+
+  drawLinearGradient(sketch, pg, -pg.width / 2, 31, pg.width, 60, startColor, endColor)
+}
+
 
 const drawLines = function(sketch, pg) {
   // Draw lines representing the horizon or reflections
-  
+  let height = 8
+
+  pg.push()
+  pg.fill(sketch.color('black'))
+  pg.noStroke()
+  pg.rect(-pg.width / 2, 30, pg.width, height)
+  pg.rect(-pg.width / 2, 53, pg.width, height)
+  pg.rect(-pg.width / 2, 74, pg.width, height)
+  pg.pop()
 }
 
 const drawOutline = function(sketch, pg) {
@@ -45,14 +63,14 @@ const drawOutline = function(sketch, pg) {
 
   // Draw small black border
   strokeColor = sketch.color('black')
-  pg.strokeWeight(5)
+  pg.strokeWeight(7)
   pg.stroke(strokeColor)
   pg.circle(0, 0, 188)
 
   pg.pop()
 }
 
-const drawGradient = function(sketch, pg, x, y, radius, startColor, endColor) {
+const drawRadialGradient = function(sketch, pg, x, y, radius, startColor, endColor) {
   pg.push()
 
   for(let i = radius; i > 0; i--){
@@ -60,11 +78,19 @@ const drawGradient = function(sketch, pg, x, y, radius, startColor, endColor) {
       let color = sketch.lerpColor(startColor, endColor, percentage)
       pg.stroke(color)
       pg.circle(x, y, i);
-
-      console.log(`radius: ${i}  percentage: ${i / radius}  color: ${color.value}`)
   }
   pg.pop()
+}
 
+const drawLinearGradient = function(sketch, pg, x, y, width, height, startColor, endColor) {
+  pg.push()
+  for(let i = height; i > 0; i--){
+    let percentage = i / height   // How far along in the gradient are we?
+    let color = sketch.lerpColor(startColor, endColor, percentage)
+    pg.stroke(color)
+    pg.rect(x, y, width, i);
+  }
+pg.pop()
 }
 
 const drawBackground = function(sketch, pg) {
