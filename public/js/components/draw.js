@@ -5,12 +5,13 @@ export const drawSunset = function(sketch, pg, features) {
   sketch.push()
   sketch.translate(sketch.width / 2, sketch.height / 2) // Place 0, 0 at middle of screen
 
-  drawBackground(sketch, pg)
-
   if(features.geometry) {
-    drawOutline(sketch, pg)
     drawSun(sketch, pg)
+    drawOutline(sketch, pg)
+
   }
+
+  drawBackground(sketch, pg)
   
   sketch.pop()
 }
@@ -28,14 +29,23 @@ const drawSun = function(sketch, pg) {
 
 const drawOutline = function(sketch, pg) {
   // Draw small outline border around the sunset
-  const fillColor = sketch.color('black')
-  const strokeColor = sketch.color('white')
-
+  // We use transparent fill so we can overwrite everything underneath and just stack on top
+  const fillColor = sketch.color(0, 0, 0, 0)
   pg.push()
-  pg.stroke(strokeColor)
-  pg.strokeWeight(7)
   pg.fill(fillColor)
+
+  // Draw larger white border
+  let strokeColor = sketch.color('white')
+  pg.strokeWeight(15)
+  pg.stroke(strokeColor)
   pg.circle(0, 0, 200)
+
+  // Draw small black border
+  strokeColor = sketch.color('black')
+  pg.strokeWeight(5)
+  pg.stroke(strokeColor)
+  pg.circle(0, 0, 188)
+
   pg.pop()
 }
 
@@ -56,11 +66,23 @@ const drawGradient = function(sketch, pg, x, y, width, height, startColor, endCo
 
 const drawBackground = function(sketch, pg) {
   // Render background to canvas
+
   const bgColors = [
     sketch.color(46, 21, 95), // Beige
     sketch.color(153, 21, 95) // Seafoam Green
   ]
-  pg.background(bgColors[1])
+
+  // We use transparent fill so we can overwrite everything underneath and just stack on top
+  const fillColor = sketch.color(0, 0, 0, 0)
+  pg.push()
+  pg.fill(fillColor)
+
+  let strokeColor = bgColors[1]
+  pg.stroke(strokeColor)
+  pg.strokeWeight(500)
+  pg.circle(0, 0, 286)
+  pg.pop()
+
 }
 
 export const drawBuffer = function(sketch, pg) {
