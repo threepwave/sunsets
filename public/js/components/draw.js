@@ -12,7 +12,7 @@ export const drawSunset = function(sketch, pg, features) {
     drawOutline(sketch, pg)
   }
 
-  drawBackground(sketch, pg)
+  drawBackground(sketch, pg, features.bgColor)
   
   sketch.pop()
 }
@@ -33,7 +33,6 @@ const drawOcean = function(sketch, pg) {
 
   drawLinearGradient(sketch, pg, -pg.width / 2, 31, pg.width, 60, startColor, endColor)
 }
-
 
 const drawLines = function(sketch, pg) {
   // Draw lines representing the horizon or reflections
@@ -70,7 +69,25 @@ const drawOutline = function(sketch, pg) {
   pg.pop()
 }
 
+const drawBackground = function(sketch, pg, bgColor) {
+  // Render background to canvas
+
+  // We use transparent fill so we can overwrite everything underneath and just stack on top
+  const fillColor = sketch.color(0, 0, 0, 0)
+  pg.push()
+  pg.fill(fillColor)
+
+  let strokeColor = sketch.color(bgColor)
+  pg.stroke(strokeColor)
+  pg.strokeWeight(500)
+  pg.circle(0, 0, 286)
+  pg.pop()
+}
+
+/* Utility Functions */
+
 const drawRadialGradient = function(sketch, pg, x, y, radius, startColor, endColor) {
+  // Draw a circular gradient radiating out from a point
   pg.push()
 
   for(let i = radius; i > 0; i--){
@@ -83,6 +100,7 @@ const drawRadialGradient = function(sketch, pg, x, y, radius, startColor, endCol
 }
 
 const drawLinearGradient = function(sketch, pg, x, y, width, height, startColor, endColor) {
+  // Draw a line-based gradient in a single direction
   pg.push()
   for(let i = height; i > 0; i--){
     let percentage = i / height   // How far along in the gradient are we?
@@ -91,27 +109,6 @@ const drawLinearGradient = function(sketch, pg, x, y, width, height, startColor,
     pg.rect(x, y, width, i);
   }
 pg.pop()
-}
-
-const drawBackground = function(sketch, pg) {
-  // Render background to canvas
-
-  const bgColors = [
-    sketch.color(46, 21, 95), // Beige
-    sketch.color(153, 21, 95) // Seafoam Green
-  ]
-
-  // We use transparent fill so we can overwrite everything underneath and just stack on top
-  const fillColor = sketch.color(0, 0, 0, 0)
-  pg.push()
-  pg.fill(fillColor)
-
-  let strokeColor = bgColors[1]
-  pg.stroke(strokeColor)
-  pg.strokeWeight(500)
-  pg.circle(0, 0, 286)
-  pg.pop()
-
 }
 
 export const drawBuffer = function(sketch, pg) {

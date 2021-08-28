@@ -35,6 +35,8 @@ new p5( (sketch) => {
     /* Setup Canvas */
     const aspectRatio = data.aspectRatio ? data.aspectRatio : 2 // HACK - Canvas should fill roughly half of the screen
     pg = setupCanvas(aspectRatio)  // Returns a drawbuffer we can write to
+
+    console.log(window.features)
   }
   
   sketch.draw = () => {
@@ -43,7 +45,7 @@ new p5( (sketch) => {
     drawSunset(sketch, pg, window.features)
     drawBuffer(sketch, pg)
 
-    sketch.noLoop()
+    sketch.noLoop() // HACK - pause animation to make it easier to debug
   }
 
   /* Setup Canvas */
