@@ -6,8 +6,8 @@ export const drawSunset = function(sketch, pg, features) {
   sketch.translate(sketch.width / 2, sketch.height / 2) // Place 0, 0 at middle of screen
 
   if(features.geometry) {
-    drawSun(sketch, pg)
-    drawOcean(sketch, pg)
+    drawSun(sketch, pg, features.sunColors)
+    drawOcean(sketch, pg, features.oceanColors)
     drawLines(sketch, pg)
     drawOutline(sketch, pg)
   }
@@ -17,19 +17,19 @@ export const drawSunset = function(sketch, pg, features) {
   sketch.pop()
 }
 
-const drawSun = function(sketch, pg) {
+const drawSun = function(sketch, pg, sunColors) {
   // Draw the sunny backdrop
-  const endColor = sketch.color(311, 92, 70, 0.97)
-  const startColor = sketch.color(311, 45, 85, 0.97)
+  const startColor = sketch.color(sunColors.start)
+  const endColor = sketch.color(sunColors.end)
 
   const borderWidth = 15  // How wide should the border around the sun be?
   drawRadialGradient(sketch, pg, 30, -20, 300 - borderWidth, startColor, endColor)
 }
 
-const drawOcean = function(sketch, pg) {
+const drawOcean = function(sketch, pg, oceanColors) {
   // Draw the sunny backdrop
-  const endColor = sketch.color(181, 92, 70)
-  const startColor = sketch.color(163, 92, 70)
+  const startColor = sketch.color(oceanColors.start)
+  const endColor = sketch.color(oceanColors.end)
 
   drawLinearGradient(sketch, pg, -pg.width / 2, 31, pg.width, 60, startColor, endColor)
 }

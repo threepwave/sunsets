@@ -21,8 +21,6 @@ new p5( (sketch) => {
     data = tokenData 
   }
 
-  console.log(data)
-
   let pg  // Draw buffer
 
   sketch.setup = () => {

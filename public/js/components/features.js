@@ -1,5 +1,5 @@
 import { PROB50, PROB25, PROB15, PROB10, PROB5, PROB1 } from '../data/probability.js'
-import {suns, oceans, outlines, backgrounds } from '../data/colors.js'
+import {suns, oceans, backgrounds } from '../data/colors.js'
 
 /* features.js - Anything related to random number and feature calculation */
 
@@ -16,9 +16,19 @@ export const setupFeatures = function (R, data, test) {
   if(!test) {
      /* This is normal execution path (non-test) */    
     features.geometry = true
+
+    /* Colors */
+    // Background Color
     seeds.bgColor = Math.floor(R() * backgrounds.length)  // Currently distrubtion is random
     features.bgColor = backgrounds[seeds.bgColor]
-    
+
+    seeds.sunColor = Math.floor(R() * suns.length) 
+    features.sunColors = suns[seeds.sunColor]
+
+    seeds.oceanColor = Math.floor(R() * oceans.length) 
+    features.oceanColors = oceans[seeds.oceanColor]
+
+
   } else {
     /* Populate features with external test data */
     features = populateTestData(R, seeds, data)
