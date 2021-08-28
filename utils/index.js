@@ -13,7 +13,7 @@ const getReadme = () => {
 
 const getNavAttributes = () => {
   return {
-    pieces: getPieces(),
+    pieces: null,
     version: pJson.version
   }
 };
