@@ -1,12 +1,12 @@
 /* draw.js - Draw to canvas */
 
-export const drawSunset = function(sketch, pg, features) {
+export const drawSunset = function(sketch, pg, features, sunPosition) {
   // Setup our sunset
   sketch.push()
   sketch.translate(sketch.width / 2, sketch.height / 2) // Place 0, 0 at middle of screen
 
   if(features.geometry) {
-    drawSun(sketch, pg, features.sunColors)
+    drawSun(sketch, pg, features.sunColors, sunPosition)
     drawOcean(sketch, pg, features.oceanColors)
     drawLines(sketch, pg)
     drawOutline(sketch, pg)
@@ -17,13 +17,15 @@ export const drawSunset = function(sketch, pg, features) {
   sketch.pop()
 }
 
-const drawSun = function(sketch, pg, sunColors) {
+const drawSun = function(sketch, pg, sunColors, sunPosition) {
   // Draw the sunny backdrop
   const startColor = sketch.color(sunColors.start)
   const endColor = sketch.color(sunColors.end)
-
+  
   const borderWidth = 15  // How wide should the border around the sun be?
-  drawRadialGradient(sketch, pg, 30, -20, 300 - borderWidth, startColor, endColor)
+  // drawRadialGradient(sketch, pg, 30, -20, 300 - borderWidth, startColor, endColor)
+  drawRadialGradient(sketch, pg, sunPosition.x, sunPosition.y, 350 - borderWidth, startColor, endColor)
+
 }
 
 const drawOcean = function(sketch, pg, oceanColors) {
@@ -36,7 +38,7 @@ const drawOcean = function(sketch, pg, oceanColors) {
 
 const drawLines = function(sketch, pg) {
   // Draw lines representing the horizon or reflections
-  let height = 8
+  let height = 7
 
   pg.push()
   pg.fill(sketch.color('black'))
@@ -48,6 +50,8 @@ const drawLines = function(sketch, pg) {
 }
 
 const drawOutline = function(sketch, pg) {
+  const thickness = 7
+
   // Draw small outline border around the sunset
   // We use transparent fill so we can overwrite everything underneath and just stack on top
   const fillColor = sketch.color(0, 0, 0, 0)
@@ -62,7 +66,7 @@ const drawOutline = function(sketch, pg) {
 
   // Draw small black border
   strokeColor = sketch.color('black')
-  pg.strokeWeight(7)
+  pg.strokeWeight(thickness)
   pg.stroke(strokeColor)
   pg.circle(0, 0, 188)
 

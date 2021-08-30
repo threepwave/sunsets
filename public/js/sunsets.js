@@ -23,6 +23,19 @@ new p5( (sketch) => {
 
   let pg  // Draw buffer
 
+  /* Animation */
+  let sunPosition = {
+    startX: -50,
+    endX: 50,
+    startY: 25,
+    endY: -250,
+    dirX: 1,  // Right
+    dirY: 1   // Up
+  }
+  sunPosition.x = sunPosition.startX
+  sunPosition.y = sunPosition.startY
+  
+
   sketch.setup = () => {
     /* Setup randonization */
     const R = getRandFunction(data.hash)  // Random function we can call to get a random number
@@ -39,11 +52,35 @@ new p5( (sketch) => {
   
   sketch.draw = () => {
     sketch.background(30) // Clear the canvas with every frame
+    if(sunPosition.dirX == 1) {
+      sunPosition.x += 1
+    } else {
+      sunPosition.x -= 1
+    }
+    if(sunPosition.dirY == 1) {
+      sunPosition.y -= 2
+    } else {
+      sunPosition.y += 2
+    }
 
-    drawSunset(sketch, pg, window.features)
+    if(sunPosition.x >= sunPosition.endX) {
+      sunPosition.dirX = -1
+    } else if(sunPosition.x <= sunPosition.startX) {
+      sunPosition.dirX = 1
+    }
+    if(sunPosition.y <= sunPosition.endY) {
+      sunPosition.dirY = -1
+    } else if(sunPosition.x >= sunPosition.startY) {
+      sunPosition.dirY = 1
+    }
+
+
+    console.log(`x: ${sunPosition.x}, y: ${sunPosition.y} dirX: ${sunPosition.dirX} dirY: ${sunPosition.dirY}`)
+
+    drawSunset(sketch, pg, window.features, sunPosition)
     drawBuffer(sketch, pg)
 
-    sketch.noLoop() // HACK - pause animation to make it easier to debug
+    // sketch.noLoop() // HACK - pause animation to make it easier to debug
   }
 
   /* Setup Canvas */
